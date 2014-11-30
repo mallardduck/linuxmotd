@@ -7,11 +7,24 @@ Compatibility: Debian based Distributions
 
 ![animated-screenshot](http://download.reidweb.com/dynmotdimg.gif)
 
-## Installation
+## Debian/Ubuntu Installation
 
 Clone the github repository
 ```bash
 git clone https://github.com/ReidWeb/linuxmotd.git
+```
+Run the 'installation' script
+```bash
+cd linuxmotd
+sudo ./install.sh
+```
+I'd recommend installing to /etc/dynmotd/, if you don't input anything it will default to /etc/dynmotd/. If you decided to use another directory, remember to change the directories below
+
+## Fedora/RHEL/CentOs Installation
+
+Clone the github repository
+```bash
+git clone https://github.com/MallardDuck/linuxmotd.git -b fedora
 ```
 Run the 'installation' script
 ```bash
