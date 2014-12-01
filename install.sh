@@ -10,12 +10,10 @@ inpsize=${#dirinput}
 
 if [ "$inpsize" -eq 0 ]
 then
-echo "firstif"
 installdir="/etc/dynmotd"
 fi
 if [ "$inpsize" -gt 0 ]
 then
-echo "secondif"
 installdir=$dirinput
 fi
 
