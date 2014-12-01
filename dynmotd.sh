@@ -52,4 +52,7 @@ echo -e "\033[1;32m `cat $DIR/dynmotdart`
 \033[0;35m+      \033[0;37mProcesses \033[0;35m= \033[1;32m$PROCCOUNT of `ulimit -u` max
 \033[0;35m+        \033[0;37mScreens \033[0;35m= \033[1;32m`screen -ls`
 \033[0;35m+++++++++++++: \033[0;37mHelpful Information\033[0;35m :+++++++++++++++
+\033[0;37m
+\033[0;35m+++++++++++++: \033[0;37mWho else is Logged-In\033[0;35m :+++++++++++++++
 \033[0;37m"
+w

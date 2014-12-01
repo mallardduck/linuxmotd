@@ -5,6 +5,7 @@
 
 echo -ne "\033[0;32mPlease input installation directory > \033[1;37m"
 read dirinput
+OS=`lsb_release -si`
 inpsize=${#dirinput}
 
 if [ "$inpsize" -eq 0 ]
@@ -24,7 +25,7 @@ cp dynmotd.sh $installdir/dynmotd.sh
 chmod 755 $installdir/dynmotd.sh
 touch $installdir/dynmotdart
 chmod 755 $installdir/dynmotdart
-echo "MOTD ART MISSING: Please place some ASCII MOTD art in /etc/dynmotd/dynmotdart" >> $installdir/dynmotdart
+echo "MOTD ART DEFAULT: Please replace some ASCII art or the MOTD in /etc/dynmotd/dynmotdart" >> $installdir/dynmotdart
 cp update-checker.sh $installdir/update-checker.sh
 chmod 755 $installdir/update-checker.sh
 touch $installdir/updates-available
