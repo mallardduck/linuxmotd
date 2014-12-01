@@ -31,7 +31,7 @@ else
 export UTEXT=$UCOUNT "Updates Available"
 fi
 
-echo -e "\033[1;32m `cat $DIR/dynmotdart`
+echo -e "\033[1;32m`cat $DIR/dynmotdart`
 \033[0;35m+++++++++++++++++: \033[0;37mSystem Data\033[0;35m :+++++++++++++++++++
 \033[0;35m+       \033[0;37mHostname \033[0;35m= \033[1;32m`hostname`
 \033[0;35m+   \033[0;37mIPv4 Address \033[0;35m= \033[1;32m`ip addr show eth0 | grep "inet\ " | awk {'print $2'}`
