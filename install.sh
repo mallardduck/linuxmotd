@@ -3,7 +3,7 @@
 #!/bin/bash
 #!/bin/bash
 
-echo -ne "\033[0;32mPlease input installation directory > \033[1;37m"
+echo -ne "\033[0;32mPlease input installation directory (ENTER /etc/dynmotd)> \033[1;37m"
 read dirinput
 OS=`lsb_release -si`
 inpsize=${#dirinput}
