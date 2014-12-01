@@ -1,23 +1,33 @@
 #!/bin/bash
  
+echo "Start DynMOTD"
+ 
 PROCCOUNT=`ps -Afl | wc -l`
 PROCCOUNT=`expr $PROCCOUNT - 5`
 GROUPZ=`groups`
 USER=`whoami`
-ADMINS=`cat /etc/group | grep --regex "^sudo" | awk -F: '{print $4}' | tr ',' '|'`
-ADMINSLIST=`grep -E $ADMINS /etc/passwd | tr ':' ' ' | tr ',' ' ' | awk {'print $5,$6,"("$1")"'} | tr '\n' ',' | sed '$s/.$//'`
+# ADMINS=`cat /etc/group | grep --regex "^sudo" | awk -F: '{print $4}' | tr ',' '|'`
+# ADMINSLIST=`grep -E $ADMINS /etc/passwd | tr ':' ' ' | tr ',' ' ' | awk {'print $5,$6,"("$1")"'} | tr '\n' ',' | sed '$s/.$//'`
 DIR=`dirname "$0"`
 UPDATESAVAIL=`cat $DIR/updates-available`
- 
+UCOUNT=`$UPDATESAVAIL | wc -l`
+
 if [[ $GROUPZ == "$USER sudo" ]]; then
-USERGROUP="Administrator"
+export USERGROUP="Administrator"
 elif [[ $USER = "root" ]]; then
-USERGROUP="Root"
+export USERGROUP="Root"
 elif [[ $USER = "$USER" ]]; then
-USERGROUP="Regular User"
+export USERGROUP="Regular User"
 else
-USERGROUP="$GROUPZ"
+export USERGROUP="$GROUPZ"
 fi
+
+if [ $UCOUNT = 0 ]; then
+export UTEXT="No Updates Available"
+else
+export UTEXT=$UCOUNT "Updates Available"
+fi
+
 echo -e "\033[1;32m `cat $DIR/dynmotdart`
 \033[0;35m+++++++++++++++++: \033[0;37mSystem Data\033[0;35m :+++++++++++++++++++
 \033[0;35m+       \033[0;37mHostname \033[0;35m= \033[1;32m`hostname`
@@ -30,7 +40,7 @@ echo -e "\033[1;32m `cat $DIR/dynmotdart`
 \033[0;35m+            \033[0;37mCPU \033[0;35m= \033[1;32m`cat /proc/cpuinfo | grep "model name" | cut -d ' ' -f3- | awk {'print $1,$2,$3,$4,$5,$6,$7,$8,$9,$10'} | head -1`
 \033[0;35m+         \033[0;37mMemory \033[0;35m= \033[1;32m`free -t -m | grep "Mem" | awk {'print $4'}`MB Available, `free -t -m | grep "Mem" | awk {'print $3'}`MB Used, `free -t -m | grep "Mem" | awk {'print $2'}`MB Total
 \033[0;35m+      \033[0;37mHDD Usage \033[0;35m= \033[1;32m`df -hT | grep "/home" | awk {'print $5'}`B Available, `df -hT | grep "/home" | awk {'print $4'}`B Used, `df -hT | grep "/home" | awk {'print $3'}`B Total 
-\033[0;35m+        \033[0;37mUpdates \033[0;35m= \033[1;32m$UPDATESAVAIL "Updates Available" 
+\033[0;35m+        \033[0;37mUpdates \033[0;35m= \033[1;32m$UCOUNT $UTEXT 
 \033[0;35m++++++++++++++++++: \033[0;37mUser Data\033[0;35m :++++++++++++++++++++
 \033[0;35m+      \033[0;37m Username \033[0;35m= \033[1;32m`whoami`
 \033[0;35m+      \033[0;37mUsergroup \033[0;35m= \033[1;32m$USERGROUP
@@ -39,6 +49,5 @@ echo -e "\033[1;32m `cat $DIR/dynmotdart`
 \033[0;35m+      \033[0;37mProcesses \033[0;35m= \033[1;32m$PROCCOUNT of `ulimit -u` max
 \033[0;35m+        \033[0;37mScreens \033[0;35m= \033[1;32m`screen -ls`
 \033[0;35m+++++++++++++: \033[0;37mHelpful Information\033[0;35m :+++++++++++++++    
-\033[0;35m+ \033[0;37mAdministrators \033[0;35m= \033[1;32m$ADMINSLIST
 \033[0;37m
 "
