@@ -5,8 +5,7 @@ PROCCOUNT=`expr $PROCCOUNT - 5`
 GROUPZ=`groups`
 USER=`whoami`
 DIR=`dirname "$0"`
-UPDATESAVAIL=`cat $DIR/updates-available`
-UCOUNT=`$UPDATESAVAIL | wc -l`
+UCOUNT=`cat $DIR/updates-available | wc -l`
 LASTTIME=`last -a $USER | head -2 | awk 'NR==2{print $3,$4,$5,$6}'`
 LASTLOG=`last -a $USER | head -2 | awk 'NR==2{print $10}'`
 LASTLOGIN="$LASTTIME  from $LASTLOG"
@@ -28,8 +27,11 @@ fi
 if [ $UCOUNT = 0 ]; then
 export UTEXT="No Updates Available"
 else
-export UTEXT=$UCOUNT "Updates Available"
+export UTEXT="$UCOUNT Updates Available"
 fi
+
+if [[ $LASTLOGIN == from ]];then LASTLOGIN="No Previous";fi
+if [[ -z $LASTLOG ]];then LASTLOGIN="No Previous";fi
 
 echo -e "\033[1;32m`cat $DIR/dynmotdart`
 \033[0;35m+++++++++++++++++: \033[0;37mSystem Data\033[0;35m :+++++++++++++++++++
@@ -37,7 +39,7 @@ echo -e "\033[1;32m`cat $DIR/dynmotdart`
 \033[0;35m+   \033[0;37mIPv4 Address \033[0;35m= \033[1;32m`ip addr show eth0 | grep "inet\ " | awk {'print $2'}`
 \033[0;35m+   \033[0;37mIPv6 Address \033[0;35m= \033[1;32m`ip addr show eth0 | grep -m 1 "inet6\ " | awk {'print $2'}`
 \033[0;35m+         \033[0;37mKernel \033[0;35m= \033[1;32m`uname -r`
-\033[0;35m+         \033[0;37mDistro \033[0;35m= \033[1;32m`cat /etc/*release | grep "PRETTY_NAME" | cut -d "=" -f 2- | sed 's/"//g'`
+\033[0;35m+         \033[0;37mDistro \033[0;35m= \033[1;32m`lsb_release -sd`
 \033[0;35m+         \033[0;37mUptime \033[0;35m= \033[1;32m`uptime | sed 's/.*up ([^,]*), .*/1/'`
 \033[0;35m+           \033[0;37mTime \033[0;35m= \033[1;32m`date`
 \033[0;35m+            \033[0;37mCPU \033[0;35m= \033[1;32m`cat /proc/cpuinfo | grep "model name" | cut -d ' ' -f3- | awk {'print $1,$2,$3,$4,$5,$6,$7,$8,$9,$10'} | head -1`
