@@ -19,6 +19,8 @@ echo "secondif"
 installdir=$dirinput
 fi
 
+echo "Installing 160k of lsb-core"
+yum install redhat-lsb-core
 
 mkdir $installdir
 cp dynmotd.sh $installdir/dynmotd.sh
