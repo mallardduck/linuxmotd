@@ -1,5 +1,6 @@
 #!/bin/bash
 
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PROCCOUNT=`ps -Afl | wc -l`
 PROCCOUNT=`expr $PROCCOUNT - 5`
 GROUPZ=`groups`
@@ -35,16 +36,16 @@ if [[ -z $LASTLOG ]];then LASTLOGIN="No Previous";fi
 
 echo -e "\033[1;32m`cat $DIR/dynmotdart`
 \033[0;35m+++++++++++++++++: \033[0;37mSystem Data\033[0;35m :+++++++++++++++++++
+\033[0;35m+           \033[0;37mTime \033[0;35m= \033[1;32m`date`
 \033[0;35m+       \033[0;37mHostname \033[0;35m= \033[1;32m`hostname`
+\033[0;35m+         \033[0;37mUptime \033[0;35m= \033[1;32m`uptime | sed 's/.*up ([^,]*), .*/1/'`
 \033[0;35m+   \033[0;37mIPv4 Address \033[0;35m= \033[1;32m`ip addr show eth0 | grep "inet\ " | awk {'print $2'}`
 \033[0;35m+   \033[0;37mIPv6 Address \033[0;35m= \033[1;32m`ip addr show eth0 | grep -m 1 "inet6\ " | awk {'print $2'}`
 \033[0;35m+         \033[0;37mKernel \033[0;35m= \033[1;32m`uname -r`
 \033[0;35m+         \033[0;37mDistro \033[0;35m= \033[1;32m`lsb_release -sd`
-\033[0;35m+         \033[0;37mUptime \033[0;35m= \033[1;32m`uptime | sed 's/.*up ([^,]*), .*/1/'`
-\033[0;35m+           \033[0;37mTime \033[0;35m= \033[1;32m`date`
 \033[0;35m+            \033[0;37mCPU \033[0;35m= \033[1;32m`cat /proc/cpuinfo | grep "model name" | cut -d ' ' -f3- | awk {'print $1,$2,$3,$4,$5,$6,$7,$8,$9,$10'} | head -1`
 \033[0;35m+         \033[0;37mMemory \033[0;35m= \033[1;32m`free -t -m | grep "Mem" | awk {'print $4'}`MB Available, `free -t -m | grep "Mem" | awk {'print $3'}`MB Used, `free -t -m | grep "Mem" | awk {'print $2'}`MB Total
-\033[0;35m+      \033[0;37mHDD Usage \033[0;35m= \033[1;32m`df -hT | grep "/home" | awk {'print $5'}`B Available, `df -hT | grep "/home" | awk {'print $4'}`B Used, `df -hT | grep "/home" | awk {'print $3'}`B Total 
+\033[0;35m+      \033[0;37mHDD Usage \033[0;35m= \033[1;32m`df -hT | grep -P '[/]$' | awk {'print $5'}`B Available, `df -hT | grep -P '[/]$' | awk {'print $4'}`B Used, `df -hT | grep -P '[/]$' | awk {'print $3'}`B Total 
 \033[0;35m+        \033[0;37mUpdates \033[0;35m= \033[1;32m$UTEXT
 \033[0;35m++++++++++++++++++: \033[0;37mUser Data\033[0;35m :++++++++++++++++++++
 \033[0;35m+      \033[0;37m Username \033[0;35m= \033[1;32m`whoami`
